@@ -172,7 +172,7 @@ const STORE='pilgrimPreceptorsApplications_v1';
 /* Admin + Google Sheet settings. SHEET_SCRIPT_URL is the Apps Script web app URL (see google-apps-script/Code.gs). */
 const ADMIN_CODE='1318',ADMIN_KEY='pilgrimPreceptorsAdmin';
 const SHEET_URL='https://docs.google.com/spreadsheets/d/1DsBRU2-gJ3Yk2FnResBKOps-yu6PKo7WAwf3HkDr83I/edit';
-const SHEET_SCRIPT_URL='';
+const SHEET_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwWaqWiP7KAFkIWU0NUC_YHkS5waRD_nlqHea4RV_ev2exQVArsGBU57WrlAtnJPbmlrg/exec';
 function setStatus(t){document.getElementById('status').textContent=t}
 function showAdmin(on){document.getElementById('adminPanel').hidden=!on;if(on)showSaved()}
 function openAdmin(){try{if(sessionStorage.getItem(ADMIN_KEY)==='1'){showAdmin(true);document.getElementById('adminTitle').scrollIntoView({behavior:'smooth'});return}}catch{}const d=document.getElementById('adminDialog');document.getElementById('adminCode').value='';document.getElementById('adminError').textContent='';d.showModal();document.getElementById('adminCode').focus()}
