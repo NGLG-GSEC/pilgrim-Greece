@@ -6,8 +6,27 @@
  * Setup: open the Google Sheet → Extensions → Apps Script, paste this file,
  * then Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone).
  * Copy the web app URL into SHEET_SCRIPT_URL in Pilgrim_Preceptors_Membership_Application.html.
+ * To check the setup, choose setup in the function menu and press Run (do not run doPost).
  */
+
+/** Safe to Run from the editor: asks for permission and checks the sheet has its header row. */
+function setup() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  const headers = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0].filter(String);
+  Logger.log('Sheet "%s" is ready with %s columns (first: %s).', sheet.getName(), headers.length, headers[0]);
+}
+
+/** Opening the web app URL in a browser shows this, to confirm the deployment works. */
+function doGet() {
+  return ContentService.createTextOutput('Pilgrim Preceptors sheet connection is working.');
+}
+
 function doPost(e) {
+  if (!e || !e.postData) {
+    // Pressing Run in the editor calls doPost with no data; run setup() instead.
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: 'No data received' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   const data = JSON.parse(e.postData.contents);
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
   const lock = LockService.getScriptLock();
